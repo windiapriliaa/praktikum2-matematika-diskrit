@@ -1,0 +1,43 @@
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn3
+
+def genre_film(total, horror, komedi, romance, horror_komedi, horror_romance, komedi_romance, ketiganya):
+    horror = horror - horror_komedi - horror_romance + ketiganya
+    komedi = komedi - horror_komedi - komedi_romance + ketiganya
+    romance = romance - komedi_romance - horror_romance + ketiganya
+    horror_komedi = horror_komedi - ketiganya
+    horror_romance = horror_romance - ketiganya
+    komedi_romance = komedi_romance - ketiganya
+    suka_ketiganya = ketiganya  # Tidak perlu dihitung ulang
+    
+    return horror, komedi, romance, horror_komedi, horror_romance, komedi_romance, suka_ketiganya
+
+# Data jumlah siswa
+totalorangyangdisurvey = 48
+horror = 23
+komedi = 19
+romance = 20
+horror_komedi = 13
+horror_romance = 9
+komedi_romance= 7
+suka_ketiganya = 5
+
+# Hitung hasil
+horror, komedi, romance, horror_komedi, horror_romance, komedi_romance, suka_ketiganya = genre_film(
+    totalorangyangdisurvey, horror, komedi, romance, horror_komedi, horror_romance, komedi_romance, suka_ketiganya
+)
+
+# Cetak hasil
+print("Hanya suka genre horror:", horror)
+print("Hanya suka genre komedi:", komedi)
+print("Hanya suka genre romance:", romance)
+print("Hanya suka genre horror & komedi:", horror_komedi)
+print("Hanya suka genre horror & romance:",horror_romance)
+print("Hanya suka genre komedi & roamnce:", komedi_romance)
+print("Suka ketiganya:", suka_ketiganya)
+
+# Buat diagram Venn
+venn = venn3(subsets=(horror, komedi, romance, horror_komedi, horror_romance, komedi_romance, suka_ketiganya),
+             set_labels=('HORROR', 'KOMEDI', 'ROMANCE'))
+plt.title("Diagram Venn untuk orang-orang yang mengikuti survey tentang genre film yang")
+plt.show()
